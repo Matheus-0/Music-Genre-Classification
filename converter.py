@@ -2,7 +2,7 @@ import os
 from pydub import AudioSegment
 
 # Define the path to your "music" folder
-music_path = "music"
+music_path = "previews"
 
 # Get a list of all the directories inside the "music" folder
 genres = os.listdir(music_path)
