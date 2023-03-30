@@ -52,7 +52,7 @@ for i in range(len(tracks)):
                 count += 1
         else:
             repeated_songs.append(tracks[i]['title'])
-    except ValueError:
+    except:
         pass
     finally:
         progress.update()
