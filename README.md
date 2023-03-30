@@ -11,3 +11,8 @@ pip3 install librosa
 pip3 install tqdm
 pip3 install pydub
 ```
+
+### Notas do professor
+
+- Nota final do nosso projeto é interessante adicionar um conjunto de dados não rotulados para poder fazer mais testes;
+- Rodar o modelo com todas as características.
