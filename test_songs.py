@@ -1,4 +1,5 @@
 import os
+import warnings
 
 import librosa
 import numpy as np
@@ -44,16 +45,30 @@ def get_features(y, sr, n_fft=1024, hop_length=512):
     return additional_features
 
 
-music_directory = './test_songs'
-music_files = os.listdir(music_directory)
+music_directory = 'music'
+music_genres = os.listdir(music_directory)
 
 pipe = load('./models/pipe_svm.joblib')
 
-for music in music_files:
-    signal, sr = librosa.load(os.path.join(music_directory, music))
-    features = get_features(signal, sr)
-    song = pd.DataFrame([features])
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
 
-    pred = pipe.predict(song)[0]
+    results = []
 
-    print(f'{music} é uma música de {pred}')
+    for genre in music_genres:
+        print(f'Realizando predições de músicas de {genre}...')
+
+        genre_directory = os.path.join(music_directory, genre)
+        genre_music_files = os.listdir(genre_directory)
+
+        for music in genre_music_files:
+            signal, sr = librosa.load(os.path.join(genre_directory, music))
+            features = get_features(signal, sr)
+            song = pd.DataFrame([features])
+
+            pred = pipe.predict(song)[0]
+
+            results.append((genre, music, pred))
+
+    for (genre, music, pred) in results:
+        print(f'Gênero {genre}: {music} foi predito como música de {pred}')
